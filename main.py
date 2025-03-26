@@ -10,6 +10,7 @@ translation_pipeline = pipeline('translation', model="Helsinki-NLP/opus-mt-fr-en
 summarization_pipeline = pipeline('summarization')
 NER_pipeline = pipeline("ner", grouped_entities=True)
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     sent = None
@@ -43,4 +44,5 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
