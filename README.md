@@ -30,7 +30,7 @@ Visit `http://localhost:5000` and select from the following options:
 
 ## Demo
 
-![Named Entity Recognition](images/categories.png)
+![Plateform Demo](images/categories.png)
 *Named Entity Recognition Demo*
 
 ![Sentiment Analysis](images/sentiment.png)
