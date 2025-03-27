@@ -1,15 +1,15 @@
 from flask import Flask, render_template, request
 from transformers import pipeline
+import os
 
 app = Flask(__name__)
 
-# Load NLP pipelines
-sentiment_pipeline = pipeline('sentiment-analysis')
-generation_pipeline = pipeline('text-generation')
+# Load smaller, more memory-efficient models
+sentiment_pipeline = pipeline('sentiment-analysis', model="distilbert-base-uncased-finetuned-sst-2-english")
+generation_pipeline = pipeline('text-generation', model="distilgpt2")
 translation_pipeline = pipeline('translation', model="Helsinki-NLP/opus-mt-fr-en")
-summarization_pipeline = pipeline('summarization')
-NER_pipeline = pipeline("ner", grouped_entities=True)
-
+summarization_pipeline = pipeline('summarization', model="facebook/bart-large-cnn")
+NER_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-english")
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -38,10 +38,7 @@ def index():
             ner = NER_pipeline(user_input)
             return render_template('index.html', ner=ner)
 
-
-
     return render_template('index.html')
-
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
